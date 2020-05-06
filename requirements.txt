@@ -1,0 +1,9 @@
+cython
+path
+pytest
+numpy
+
+griddataformats~=0.5
+mdtraj~=1.9
+torch~=1.5
+prody~=1.10
