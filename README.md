@@ -1,29 +1,36 @@
-# README #
+# MolGrid #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Small library for creating 3D grids from pdb files
 
-### What is this repository for? ###
+### Installation ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Run
+```
+pip install git+https://bitbucket.org/ignatovmg/mol_grid.git
+```
 
-### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Usage ###
 
-### Contribution guidelines ###
+Import classes    
+```
+from mol_grid import Grid, GridMaker, dot_torch
+```   
 
-* Writing tests
-* Code review
-* Other guidelines
+Create a grid with      
+```
+grid = Grid(grid=np.ones(10, 3, 3, 3), origin=np.array([1., 2., 3.]), delta=np.array([1., 1., 1.]))
+```
 
-### Who do I talk to? ###
+Save it in .dx format     
+```
+grid.save("grid.list")
+```
 
-* Repo owner or admin
-* Other community or team contact
+Make grid from prody atom group     
+```
+ag = prody.parsePDB(prody.fetchPDB('1ao7'))
+maker = GridMaker()
+grid = maker.make_grids(ag)
+grid.save("1ao7.list")
+```
