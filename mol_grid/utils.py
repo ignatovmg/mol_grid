@@ -1,7 +1,7 @@
 import prody
 
 
-def safe_read_ag(ag) -> prody.Atomic:
+def safe_read_ag(ag):
     if isinstance(ag, prody.AtomGroup):
         return ag
     elif isinstance(ag, str):

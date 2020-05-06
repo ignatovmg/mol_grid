@@ -6,9 +6,6 @@ d_3aa = {'A': 'ALA', 'C': 'CYS', 'B': 'ASX', 'E': 'GLU', 'D': 'ASP', 'G': 'GLY',
          'K': 'LYS', 'M': 'MET', 'L': 'LEU', 'N': 'ASN', 'Q': 'GLN', 'P': 'PRO', 'S': 'SER', 'R': 'ARG', 'T': 'THR',
          'W': 'TRP', 'V': 'VAL', 'Y': 'TYR', 'Z': 'GLX'}
 
-dihed_count = {'CYS': 1, 'ASP': 2, 'SER': 1, 'GLN': 3, 'LYS': 4, 'ILE': 2, 'PRO': 1, 'THR': 1, 'PHE': 2, 'ALA': 0,
-               'GLY': 0, 'HIS': 2, 'GLU': 3, 'LEU': 2, 'ARG': 4, 'TRP': 2, 'VAL': 1, 'ASN': 2, 'TYR': 2, 'MET': 3}
-
 # Identified manually using my personal judgement # TODO: add backbone oxygens
 FUNCTIONAL_GROUPS = {'hydroxyl': {'SER': [[['OG'], ['HG']]],
                                   'THR': [[['OG1'], ['HG1']]],
