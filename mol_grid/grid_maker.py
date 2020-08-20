@@ -44,7 +44,7 @@ class GridMaker(object):
                  type=None,
                  box_center=None,
                  box_size=None,
-                 centering='com',
+                 centering='com',  # com / coe
                  around_atom_group=None):
 
         self.cell = cell

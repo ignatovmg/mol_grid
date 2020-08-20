@@ -95,6 +95,32 @@ class Grid(object):
         origin = origin + delta * np.array(l)
         return Grid(grid, origin, delta)
 
+    def move(self, rot_mat, tr_vec):
+        """
+        Rotate the grid around its center then translate
+        """
+        shape = np.array(self.grid.shape[-3:])
+
+        # translation in cells
+        tr_vec = tr_vec / self.delta
+
+        # compute mapping to the original non-rotated grid
+        i3d = np.transpose(np.indices(shape), axes=[1, 2, 3, 0]).reshape(-1, 3)
+        center = ((shape - 1) / 2)
+        i3d_orig = (np.matmul(i3d - tr_vec - center, rot_mat.T) + center).round().astype(int)
+
+        # filter out those which are out of bounds
+        cond = (((i3d_orig >= shape) + (i3d_orig < 0)).sum(axis=1) > 0)
+        buf = (i3d_orig % shape).T
+
+        # fill values in rotated grid
+        cond = np.stack([cond]*self.grid.shape[0])
+        rotated = np.where(cond, 0, self.grid[:, buf[0], buf[1], buf[2]])
+        rotated = rotated.reshape(self.grid.shape)
+        self.grid = rotated
+
+        return self
+
 
 def dot_numpy(grid1: Grid, grid2: Grid):
     raise NotImplementedError()
