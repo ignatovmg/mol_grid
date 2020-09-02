@@ -1,6 +1,7 @@
 # Always prefer setuptools over distutils
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Extension
 from os import path
+from Cython.Build import cythonize
 
 here = path.abspath(path.dirname(__file__))
 
@@ -10,6 +11,8 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
 # Fields marked as "Optional" may be commented out.
+
+#cgrids_module = Extension('mol_grid.cgrids', sources=['mol_grid/cgrids.c'])
 
 setup(
     name='mol_grid',
@@ -57,7 +60,7 @@ setup(
     #   py_modules=["my_module"],
     #
     packages=find_packages(),  # Required
-    #ext_modules=cythonize('fft_ml/dataset/cgrid.pyx'),
+    ext_modules=cythonize('mol_grid/cgrids.pyx'),
 
     # Specify which Python versions you support. In contrast to the
     # 'Programming Language' classifiers above, 'pip install' will check this

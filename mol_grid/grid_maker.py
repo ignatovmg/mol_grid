@@ -5,10 +5,7 @@ import tempfile
 import itertools
 import mdtraj as md
 
-import pyximport
-pyximport.install()
 from . import cgrids
-
 from .loggers import logger
 from .amino_acids import FUNCTIONAL_GROUPS
 from .grid import Grid
