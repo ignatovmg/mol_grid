@@ -1,7 +1,7 @@
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages, Extension
 from os import path
-from Cython.Build import cythonize
+#from Cython.Build import cythonize
 
 here = path.abspath(path.dirname(__file__))
 
@@ -11,8 +11,8 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
 # Fields marked as "Optional" may be commented out.
-
-#cgrids_module = Extension('mol_grid.cgrids', sources=['mol_grid/cgrids.c'])
+with open(path.join(here, 'requirements.txt'), 'r') as f:
+    dependencies = [x.strip() for x in f]
 
 setup(
     name='mol_grid',
@@ -60,7 +60,7 @@ setup(
     #   py_modules=["my_module"],
     #
     packages=find_packages(),  # Required
-    ext_modules=cythonize('mol_grid/cgrids.pyx'),
+    ext_modules=[Extension('mol_grid/cgrids', sources=['mol_grid/cgrids.c'])], #cythonize('mol_grid/cgrids.pyx'),
 
     # Specify which Python versions you support. In contrast to the
     # 'Programming Language' classifiers above, 'pip install' will check this
@@ -75,7 +75,7 @@ setup(
     #
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    #install_requires=['peppercorn'],  # Optional
+    install_requires=dependencies,  # Optional
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
