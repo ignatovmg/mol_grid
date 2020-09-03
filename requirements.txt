@@ -5,5 +5,5 @@ biopython
 pyparsing
 griddataformats~=0.5
 mdtraj~=1.9
-torch~=1.5
+torch
 prody==1.10.11
