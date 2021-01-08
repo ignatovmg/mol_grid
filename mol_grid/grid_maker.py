@@ -41,6 +41,7 @@ class GridMaker(object):
                  type=None,
                  box_center=None,
                  box_size=None,
+                 box_shape=None,
                  centering='com',  # com / coe
                  around_atom_group=None):
 
@@ -81,6 +82,7 @@ class GridMaker(object):
 
         self.box_center = box_center  # angstroms
         self.box_size = box_size  # angstroms
+        self.box_shape = box_shape
         if around_atom_group:  # TODO: i dont want to keep the atom group here, but this way we
             origin, size = self._get_box_from_ag(around_atom_group)  # end up recalculating origin and size later
             self.box_center = list(origin + size * cell / 2)
@@ -276,12 +278,18 @@ class GridMaker(object):
     def make_grids(self, ag: prody.AtomGroup) -> Grid:
         '''
         '''
-        if self.box_size is not None:
+        if self.box_size is not None or self.box_shape is not None:
             if self.box_center is None:
                 center = self._get_box_center(ag)
             else:
                 center = self.box_center
-            origin, shape = self._get_box_from_center_coords(center, self.box_size)
+
+            if self.box_shape is None:
+                origin, shape = self._get_box_from_center_coords(center, self.box_size)
+            else:
+                shape = np.array(self.box_shape).astype(int)
+                assert len(shape) == 3
+                origin = center - shape * self.cell / 2
         else:
             origin, shape = self._get_box_from_ag(ag)
         delta = tuple([self.cell] * 3)
