@@ -3,7 +3,6 @@ import numpy as np
 import os
 import tempfile
 import itertools
-import mdtraj as md
 
 from . import cgrids
 from .loggers import logger
@@ -228,25 +227,6 @@ class GridMaker(object):
         # for d in range(grid.shape[0]):
         #    cgrid.grid_fill_spheres(self.atom_radius, self.cell, grid[d], origin, nodes_l, nodes_u, coords, value)
 
-    @staticmethod
-    def _load_traj(ag):
-        h, tmp = tempfile.mkstemp(dir='.', suffix='.pdb')
-        os.close(h)
-        prody.writePDB(tmp, ag)
-        traj = md.load_pdb(tmp, frame=0)
-        os.remove(tmp)
-        return traj
-
-    def _select_core(self, ag):
-        traj = self._load_traj(ag)
-        sasa_atoms = md.shrake_rupley(traj)[0]
-        sasa_serials = map(str, ag.getSerials()[sasa_atoms > 0])
-        core = ag.select(f'not (within {self.sasa_layer} of serial {" ".join(sasa_serials)})')
-        if core is None:
-            logger.warning('No core atoms found in the protein')
-            return
-        return core
-
     def fill_core(self, data, origin, ag, value):
         # logger.debug(f'Filling protein core with {self.sasa_penalty}')
         core = self._select_core(ag)
@@ -307,10 +287,11 @@ class GridMaker(object):
             data[data < 0.001] = self.vacuum_value
 
         if self.sasa_penalty is not None:
-            logger.debug(f'Filling protein core with {self.sasa_penalty}')
-            core = self._select_core(ag)
-            if core is not None:
-                self._grid_fill_4d(data, origin, core, self.sasa_penalty)
+            raise RuntimeError('To use SASA penalty switch to the version with mdtraj enabled')
+            #logger.debug(f'Filling protein core with {self.sasa_penalty}')
+            #core = self._select_core(ag)
+            #if core is not None:
+            #    self._grid_fill_4d(data, origin, core, self.sasa_penalty)
 
         if np.all(data == 0):
             logger.warning('All grid points are zero')
