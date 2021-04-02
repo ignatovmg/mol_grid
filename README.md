@@ -27,10 +27,15 @@ Save it in .dx format
 grid.save("grid.list")
 ```
 
-Make grid from prody atom group     
+Make grid from a prody atom group     
 ```
 ag = prody.parsePDB(prody.fetchPDB('1ao7'))
 maker = GridMaker()
 grid = maker.make_grids(ag)
 grid.save("1ao7.list")
 ```
+
+### Changing `cgrids.pyx` ###
+
+If you're changing `cgrids.pyx`, the you need to run `cython cgrids.pyx` to generate 
+a new `cgrids.c` file and then run `pip install .`
