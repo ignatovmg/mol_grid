@@ -16,7 +16,7 @@ with open(path.join(here, 'requirements.txt'), 'r') as f:
 
 setup(
     name='mol_grid',
-    version='0.0.0',
+    version='0.1.0',
     description='Functionality for converting molecules to 3D grids',
     long_description=long_description,
     long_description_content_type='text/markdown',
