@@ -40,6 +40,37 @@ def grid_sum_spheres(atom_radius,
                         cgrid[x, y, z] += cscale
 
 
+def grid_sum_points(cell,
+                    grid: np.array,
+                    shape: np.array,
+                    origin: np.array,
+                    coords: np.array,
+                    weights: np.array):
+    coords = ((coords - origin) / cell)
+
+    cdef size_t size = coords.shape[0]
+    cdef double[:, :] ccoords = coords
+    cdef double[:, :, :] cgrid = grid
+
+    cdef double[:] c
+    cdef int x, y, z
+    cdef double cscale;
+
+    for i in range(size):
+        c = ccoords[i, :]
+        cscale = weights[i]
+        x = round(c[0])
+        y = round(c[1])
+        z = round(c[2])
+        if x < 0 or x >= shape[0]:
+            continue
+        if y < 0 or y >= shape[1]:
+            continue
+        if z < 0 or z >= shape[2]:
+            continue
+        grid[x, y, z] += cscale
+
+
 def grid_fill_spheres(atom_radius,
                       cell,
                       grid: np.array,

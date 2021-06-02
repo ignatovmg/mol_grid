@@ -1,4 +1,4 @@
-# MolGrid 0.1.0 #
+# MolGrid 0.2.0 #
 
 Small library for creating 3D grids from pdb files
 

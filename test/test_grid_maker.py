@@ -80,6 +80,21 @@ def test_weights():
     g = maker.make_grids(prody.parsePDB(TEST_DATA / '1atom.pdb'), weights=[2.0])
     print(g.grid)
 
+
+def test_grid_1atom_values_point():
+    maker = GridMaker(cell=1.0, padding=3.0, config='Elements', mode='point')
+    g = maker.make_grids(prody.parsePDB(TEST_DATA / '1atom.pdb'))
+    assert g.grid[1, 3, 3, 3] == pytest.approx(1.0, 0.001)
+    g.grid[1, 3, 3, 3] = 0
+    assert np.all(g.grid < 0.00001)
+
+
+def test_grid_1atom_values_point_out_of_bounds():
+    maker = GridMaker(cell=1.0, box_origin=[-10, -10, -10], box_shape=[3,3,3], config='Elements', mode='point')
+    g = maker.make_grids(prody.parsePDB(TEST_DATA / '1atom.pdb'))
+    assert np.all(g.grid < 0.00001)
+
+
 # Origin and shape calculation
 
 def test_origin_shape_1():

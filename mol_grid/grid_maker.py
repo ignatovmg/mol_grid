@@ -56,8 +56,8 @@ class GridMaker(object):
         else:
             raise RuntimeError('Wrong config name')
 
-        if self.mode not in ['gaussian', 'sphere']:
-            raise RuntimeError('mode must be set to "gaussian" or" sphere"')
+        if self.mode not in ['gaussian', 'sphere', 'point']:
+            raise RuntimeError('mode must be set to "gaussian" or" sphere" or "point"')
 
         self.box_origin = box_origin
         self.box_center = box_center  # angstroms
@@ -158,6 +158,8 @@ class GridMaker(object):
         if self.mode == 'sphere':
             # logger.debug('Sum atoms as spheres')
             cgrids.grid_sum_spheres(self.atom_radius, self.cell, grid, origin, nodes_l, nodes_u, coords, weights)
+        if self.mode == 'point':
+            cgrids.grid_sum_points(self.cell, grid, np.array(grid.shape), origin, coords, weights)
 
     def _get_origin_and_shape(self, ag):
         shape = None
