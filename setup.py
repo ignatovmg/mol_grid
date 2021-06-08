@@ -1,7 +1,7 @@
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages, Extension
 from os import path
-#from Cython.Build import cythonize
+from Cython.Build import cythonize
 
 here = path.abspath(path.dirname(__file__))
 
@@ -60,7 +60,7 @@ setup(
     #   py_modules=["my_module"],
     #
     packages=find_packages(),  # Required
-    ext_modules=[Extension('mol_grid/cgrids', sources=['mol_grid/cgrids.c'])],
+    ext_modules=cythonize('mol_grid/cgrids.pyx'), #[Extension('mol_grid.cgrids', sources=['mol_grid/cgrids.c'])],
     #ext_modules=cythonize('mol_grid/cgrids.pyx'),
 
     # Specify which Python versions you support. In contrast to the
