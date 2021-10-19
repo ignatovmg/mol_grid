@@ -1,9 +1,6 @@
 import prody
 import numpy as np
-import os
-import tempfile
 import itertools
-import mdtraj as md
 
 from . import cgrids
 from .loggers import logger
